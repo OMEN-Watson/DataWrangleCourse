@@ -1,1 +1,6 @@
 ####  4178ed74 / 50da719add8b
+u 75 68 82 3
+25, 11, 40, 17, 17, 41, 21, 31, 46, 26, 86, 74, 100, 28, 15, 97,75,68,82,3
+
+D:\\01Gan\\abroad\\study\\05ANU\\8430DataWrangle\\Assignment\\DataWrangleCourse\\A1\\data_wrangling_medical_2024_u7568823.csv
+
