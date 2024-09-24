@@ -1,0 +1,87 @@
+Your ANU ID check code is:           4178ed74
+Your student data set check code is: 07f7d940952b
+
+  *** Check this pair of codes is in the list provided on Wattle
+  *** If not contact the course convenor.
+
+####  4178ed74 / 07f7d940952b
+
+
+A2
+
+Task1
+
+1.1
+Final Result:0.57
+
+steps:
+The Dice coefficient similarity based on unigrams (q = 1) between the strings 1237568 and 1238823 is 0.57
+
+    Unigrams:
+        String A (1237568): {1, 2, 3, 7, 5, 6, 8}
+        String B (1238823): {1, 2, 3, 8, 8, 2, 3}
+
+    Common Unigrams: 1, 2, 3, 8 — counted once in each.
+        ∣A∩B∣=4∣A∩B∣=4
+
+    Total Length: ∣A∣=7∣A∣=7, ∣B∣=7∣B∣=7
+
+    Dice Coefficient:
+    Dice(A,B)= 2*4/(7+7)=0.57
+
+  1.2
+
+  0.22
+  steps:
+
+    Bigrams:
+        String A (1237568): {12, 23, 37, 75, 56, 68}
+        String B (1238823): {12, 23, 38, 88, 82, 23}
+
+    Common Bigrams (∣A∩B∣∣A∩B∣): 12, 23
+        ∣A∩B∣=2 
+
+    Unique Bigrams (∣A∪B∣∣A∪B∣): {12, 23, 37, 75, 56, 68, 38, 88, 82}
+        ∣A∪B∣=9 
+
+    Jaccard Similarity:
+    Jaccard(A,B)=2/9=0.22
+ 
+
+ 1.3
+
+ 0.57
+
+
+ steps:
+ String X (1237568)  
+String Y (1238823)  
+Bag Distance:
+
+    X−Y="756"X−Y="756"
+    Y−X="238"Y−X="238"
+    Bag Distance = 3
+
+Length of Strings:
+
+    max⁡(len(X),len(Y))=7 
+Bag Distance Similarity:
+Bag Distance Similarity=1−3/7=0.5714
+
+1.4 
+Edit Distance:   6
+
+   |1|2|3|8|8|2|3
+ |0|1|2|3|4|5|6|7
+1|1|0|1|2|3|4|5|6
+2|2|1|0|1|2|3|4|5
+3|3|2|1|0|1|2|3|4
+7|4|3|2|1|2|3|4|5
+5|5|4|3|2|3|4|5|6
+6|6|5|4|3|4|5|6|7
+8|7|6|5|4|3|4|5|6
+
+1.5
+
+The bag distance measures the difference between two strings based solely on the count of each character, ignoring their order or position—treating the strings as unordered "bags" of characters. 
+In contrast, the edit distance considers both character counts and their positions, so while the bag distance provides a lower bound, the edit distance gives a more comprehensive measure of the transformations needed to convert one string into another.
