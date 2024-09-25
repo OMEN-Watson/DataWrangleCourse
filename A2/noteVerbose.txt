@@ -1,0 +1,230 @@
+Your ANU ID check code is:           4178ed74
+Your student data set check code is: 07f7d940952b
+
+  * Check this pair of codes is in the list provided on Wattle
+  * If not contact the course convenor.
+
+####  4178ed74 / 07f7d940952b
+
+
+A2
+
+Task1
+
+1.1
+Final Result:0.57
+
+steps:
+The Dice coefficient similarity based on unigrams (q = 1) between the strings 1237568 and 1238823 is 0.57
+
+    Unigrams:
+        String A (1237568): {1, 2, 3, 7, 5, 6, 8}
+        String B (1238823): {1, 2, 3, 8, 8, 2, 3}
+
+    Common Unigrams: 1, 2, 3, 8 — counted once in each.
+        ∣A∩B∣=4∣A∩B∣=4
+
+    Total Length: ∣A∣=7∣A∣=7, ∣B∣=7∣B∣=7
+
+    Dice Coefficient:
+    Dice(A,B)= 2*4/(7+7)=0.57
+
+  1.2
+
+  0.22
+  steps:
+
+    Bigrams:
+        String A (1237568): {12, 23, 37, 75, 56, 68}
+        String B (1238823): {12, 23, 38, 88, 82, 23}
+
+    Common Bigrams (∣A∩B∣∣A∩B∣): 12, 23
+        ∣A∩B∣=2 
+
+    Unique Bigrams (∣A∪B∣∣A∪B∣): {12, 23, 37, 75, 56, 68, 38, 88, 82}
+        ∣A∪B∣=9 
+
+    Jaccard Similarity:
+    Jaccard(A,B)=2/9=0.22
+ 
+
+ 1.3
+
+ 0.57
+
+
+ steps:
+ String X (1237568)  
+String Y (1238823)  
+Bag Distance:
+
+    X−Y="756"X−Y="756"
+    Y−X="238"Y−X="238"
+    Bag Distance = 3
+
+Length of Strings:
+
+    max⁡(len(X),len(Y))=7 
+Bag Distance Similarity:
+Bag Distance Similarity=1−3/7=0.5714
+
+1.4 
+Edit Distance:   6
+
+   |1|2|3|8|8|2|3
+ |0|1|2|3|4|5|6|7
+1|1|0|1|2|3|4|5|6
+2|2|1|0|1|2|3|4|5
+3|3|2|1|0|1|2|3|4
+7|4|3|2|1|2|3|4|5
+5|5|4|3|2|3|4|5|6
+6|6|5|4|3|4|5|6|7
+8|7|6|5|4|3|4|5|6
+
+1.5
+
+The bag distance measures the difference between two strings based solely on the count of each character, ignoring their order or position—treating the strings as unordered "bags" of characters. 
+In contrast, the edit distance considers both character counts and their positions, so while the bag distance provides a lower bound, the edit distance gives a more comprehensive measure of the transformations needed to convert one string into another.
+
+Task2
+
+2.1
+
+Number of unique SSNs occurred in common in both datasets: 16005
+Data only in the medical dataset: 3995
+Data only in the employment dataset: 3185
+
+
+2.2
+
+
+
+What i Did with These Records:
+
+i included all records from both datasets in the merged dataset by performing an outer join during the merge operation. This approach ensures that:
+
+- Records unique to the medical dataset are included in the merged dataset, with `NaN` (Not a Number) or `null` values for the fields from the employment dataset. And it's same for the "employment dataset"
+ 
+
+Explanation and Justification:
+
+1. Data Completeness:
+   - Including all records ensures that no data is lost during the merging process. Records unique to one dataset may contain valuable information that could be important for future analyses.
+
+2. Reflecting Real-World Scenarios:
+   - In real-world data, it's common for individuals to have events recorded in one dataset but not the other. For example, a person may have had a medical event but no recent employment event, or vice versa.
+
+3. Avoiding Bias:
+   - Excluding records that only appear in one dataset could introduce bias. It might skew analyses by over-representing individuals who have both medical and employment events, while under-representing those who have only one type of event.
+
+4. Facilitating Comprehensive Analysis:
+   - Including all records allows for a more comprehensive analysis. Researchers can study the characteristics of individuals who only appear in one dataset, which might reveal important insights (e.g., unemployed individuals with medical conditions).
+
+5. Assignment Requirements:
+   - The assignment specifies that the merged dataset must include all original attribute names and the `ssn` attribute. Using an outer join satisfies this requirement by preserving all records and attributes from both datasets.
+
+Handling Missing Data:
+
+- Missing Values:
+  - For records that only exist in one dataset, the fields corresponding to the other dataset are left as missing values (`NaN` or `null`).
+  - These missing values can be appropriately handled in subsequent analyses, such as data imputation, exclusion from certain analyses, or treating them as a separate category.
+
+
+
+Task2.3
+
+Number of unique SSNs with duplicate records in the medical dataset: 0
+Number of unique SSNs with duplicate records in the employment dataset: 810
+
+for those duplicate records  i  identify and count the duplicate records in both the medical and employment datasets based on the SSN. For example,Number of Duplicate SSNs in Medical Dataset is Determined by counting the number of ssn entries that appear more than once in the medical dataset.
+
+
+Plan for Handling Duplicates:
+
+At the Very End (Before Saving the Final Merged Dataset):
+
+    Deduplication Strategy:
+
+        Identify All Duplicate Records:
+            For each dataset, identify all records with duplicate ssn values.
+
+        Consolidate Duplicate Records:
+
+            Aggregation:
+
+                Numerical Attributes:
+
+                    For numerical fields such as age_at_consultation, height, weight, bmi, blood_pressure, cholesterol_level, salary, and years_of_experience, consider taking one of the following:
+
+                        Most Recent Value: If a timestamp is available (e.g., consultation_timestamp or employment_timestamp), select the value from the most recent record.
+
+                        Average Value: Calculate the average if it makes sense contextually (e.g., for bmi or salary over multiple records).
+
+                Categorical Attributes:
+                    For categorical fields like gender, marital_status, education, and occupation, select the most frequent value or prioritize non-null and consistent entries.
+
+                Textual Attributes:
+                    For attributes like clinical_notes, concatenate the notes from all duplicate records, separating them clearly to retain all information.
+
+        Resolving Conflicts:
+
+            Discrepancies in Data:
+
+                If duplicate records have conflicting information, investigate the inconsistencies:
+
+                    Data Accuracy: Determine which record is more accurate based on additional context, such as timestamps.
+
+                    Missing Values: Prefer records with complete data over those with missing values.
+
+        Create a Single Representative Record:
+            After aggregating and resolving conflicts, merge the duplicate records into one comprehensive record for each unique ssn.
+
+Explanation and Justification:
+
+    Ensuring Data Integrity:
+
+        Accurate Representation: Consolidating duplicates ensures each individual is uniquely and accurately represented in the dataset.
+
+        Preventing Data Skew: Duplicate records can skew analyses by over-representing certain individuals, leading to biased results.
+
+    Preserving Valuable Information:
+
+        Comprehensive Profiles: Merging duplicates allows us to retain all pertinent information about an individual, which might be spread across multiple records.
+
+        Contextual Understanding: Aggregated data can provide a better understanding of an individual's history, such as changes over time in medical measurements or employment details.
+
+    Data Quality Improvement:
+
+        Consistency: Resolving discrepancies enhances the consistency and reliability of the dataset.
+
+        Reduced Redundancy: Eliminating duplicates reduces data redundancy, making the dataset more efficient to process and analyze.
+
+    Alignment with Best Practices:
+
+        Standard Procedure: Deduplication is a standard data cleaning step in data preprocessing workflows.
+
+        Compliance: Ensures the dataset meets quality standards required for accurate analyses and reporting.
+
+    Assignment Requirements:
+        Instruction Adherence: The assignment specifies that deduplication should be performed at the very end, after answering all other questions, to ensure that analyses reflect the original data.
+
+
+    Task2.4
+
+Inconsistency counts per attribute:
+- first_name: 0 
+- middle_name: 2801 
+- last_name: 0 
+- gender: 1631 
+- birth_date: 0 
+- street_address: 6597 
+- suburb: 6490 
+- postcode: 8358 
+- state: 2677 
+- phone: 8565 
+- email: 6878 
+
+To deal with inconsistencies between the two datasets, I employed a combination of standardization, similarity checks, and specific rules for handling various attributes. First, I standardized text-based attributes (e.g., names, email, address) by converting them to lowercase and stripping any leading or trailing whitespaces to ensure consistency. For names, I used a similarity threshold with the SequenceMatcher library, allowing small variations (like typos) to be considered consistent if the similarity score was above 0.8.
+
+For gender, I mapped values like "M", "F", "male", and "female" to ensure that different forms of the same information were treated equally. Birth dates were parsed with custom handling for potential formatting issues, such as dealing with the "24:00" hour. Attributes like phone numbers and addresses were compared using exact matches. If inconsistencies were found, they were flagged, and counts were tracked. This approach ensures that minor differences are allowed where appropriate, while significant discrepancies are caught for further review.
+

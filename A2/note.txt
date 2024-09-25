@@ -1,8 +1,8 @@
 Your ANU ID check code is:           4178ed74
 Your student data set check code is: 07f7d940952b
 
-  *** Check this pair of codes is in the list provided on Wattle
-  *** If not contact the course convenor.
+  * Check this pair of codes is in the list provided on Wattle
+  * If not contact the course convenor.
 
 ####  4178ed74 / 07f7d940952b
 
@@ -85,3 +85,61 @@ Edit Distance:   6
 
 The bag distance measures the difference between two strings based solely on the count of each character, ignoring their order or position—treating the strings as unordered "bags" of characters. 
 In contrast, the edit distance considers both character counts and their positions, so while the bag distance provides a lower bound, the edit distance gives a more comprehensive measure of the transformations needed to convert one string into another.
+
+Task2
+
+2.1
+
+Number of unique SSNs occurred in common in both datasets: 16005
+Data only in the medical dataset: 3995
+Data only in the employment dataset: 3185
+
+
+2.2
+
+
+I performed an outer join to include all records from both the medical and employment datasets, ensuring no data was lost. Records unique to one dataset were included with `NaN` values for fields from the other dataset.
+
+ Justification:
+1. Data Completeness: Preserves all records for future analysis, even if they exist in only one dataset.
+2. Real-World Scenarios: Reflects real situations where individuals may have medical or employment events, but not both.
+3. Avoiding Bias: Ensures balanced representation by including individuals with only one type of event.
+
+
+
+
+Task2.3
+
+
+Number of unique SSNs with duplicate records in the medical dataset: 0
+Those records in the employment dataset: 810
+
+To handle duplicate records, I first identified all duplicate SSNs in both the medical and employment datasets. For deduplication, I consolidated these records by applying different strategies based on the type of data:
+
+- Numerical attributes (e.g., BMI, salary) were handled by selecting the most recent value based on timestamps or averaging the values if appropriate.
+- Categorical attributes (e.g., gender, education) were resolved by selecting the most frequent or consistent non-null entry.
+- Textual attributes (e.g., clinical notes) were combined by concatenating all notes from duplicate records.
+
+When conflicts arose, I prioritized the most accurate or complete records. After resolving conflicts, I merged duplicates into a single representative record for each SSN.
+
+This approach ensured data integrity by preventing skewed analysis and redundancy, while retaining valuable information about each individual. 
+
+
+    Task2.4
+
+Inconsistency counts per attribute:
+- first_name: 0 
+- middle_name: 2801 
+- last_name: 0 
+- gender: 1631 
+- birth_date: 0 
+- street_address: 6597 
+- suburb: 6490 
+- postcode: 8358 
+- state: 2677 
+- phone: 8565 
+- email: 6878 
+
+
+To handle inconsistencies between the two datasets, I standardized text attributes (e.g., names, email, address) by converting them to lowercase and removing extra spaces. For names, I used a similarity threshold via the SequenceMatcher library, treating values as consistent if the similarity score was above 0.8. For gender, I mapped variations like "M", "F", "male", and "female" to standard values. Birth dates were handled with custom parsing to address potential formatting issues, such as "24:00" hours. Phone numbers and addresses were compared exactly. Inconsistencies were flagged, and counts were tracked for review.
+
