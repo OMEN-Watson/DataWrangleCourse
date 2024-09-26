@@ -259,5 +259,49 @@ For the two attributes with the highest number of missing values in the merged d
  2. Marital Status:
    - Imputation Approach: I calculated correlations between marital_status and other numerical features using Pearson correlation and evaluated associations with categorical features using Cramér's V. I selected the most relevant features (e.g., `age`, `gender`, `education`, and `occupation`) and used them to build a Multinomial Logistic Regression model for imputation.
    - Justification: Marital status is a categorical variable with multiple levels, making logistic regression appropriate for predicting probabilities of categories such as single, married, or divorced. The correlation analysis ensured that the most predictive attributes were included, allowing for realistic, data-driven imputation that aligns with observed patterns in the dataset.
- 
 
+   Task3.3
+
+   Counts of Incorrect or Impossible Values per Attribute:
+weight: 1648 incorrect or impossible values
+blood_pressure: 16815  
+cholesterol_level: 1326 
+birth_date: 10194
+email: 1822
+credit_card_number: 13815 
+salary: 2707 
+postcode: 16810 
+
+Judgment standard：each attribute should be based on logical constraints and domain-specific validation rules. for example
+
+Weight:  
+
+ Flags weight values below 2 kg or above 635 kg, which are not plausible.
+
+Blood Pressure:
+
+    Uses a regular expression to validate blood pressure values in the systolic/diastolic format and ensures systolic values between 70–250 mmHg and diastolic values between 40–150 mmHg.
+
+Cholesterol Level:
+
+    Flags cholesterol levels outside the range of 100–400 mg/dL, which are clinically abnormal.
+
+Birth Date:
+
+    Ensures that birth_date is not in the future and is consistent with the calculated age.
+
+Email:
+
+    Uses a simple regular expression to ensure valid email format.
+
+Credit Card Number:
+
+    Uses the Luhn algorithm to verify credit card numbers for validity.
+
+ Salary:
+
+    Flags salary values outside the range of 0 to 1,000,000,000
+
+Postcode:
+
+    Validates Australian postcodes (assuming 4-digit format).
