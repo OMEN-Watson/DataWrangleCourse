@@ -228,3 +228,36 @@ To deal with inconsistencies between the two datasets, I employed a combination 
 
 For gender, I mapped values like "M", "F", "male", and "female" to ensure that different forms of the same information were treated equally. Birth dates were parsed with custom handling for potential formatting issues, such as dealing with the "24:00" hour. Attributes like phone numbers and addresses were compared using exact matches. If inconsistencies were found, they were flagged, and counts were tracked. This approach ensures that minor differences are allowed where appropriate, while significant discrepancies are caught for further review.
 
+Task3
+
+Task3.1
+
+for   (a) education data set:
+
+Combination of attributes with the most missing values: ('occupation', 'salary', 'credit_card_number')
+Number of records with missing values for this combination: 254
+
+for  (b)   merged data set.
+
+Combination of attributes with the most missing values:  ('marital_status', 'occupation', 'credit_card_number')
+Number of records with missing values for those three combinations: 1430
+
+
+
+Task3 .2
+
+Top 2 attributes with the highest number of missing values:
+salary            2510
+marital_status    2240
+
+For the two attributes with the highest number of missing values in the merged dataset—salary and marital_status—I applied the following imputation strategies, guided by correlation analysis to select relevant attributes:
+
+ 1. Salary:
+   - Imputation Approach: Before imputing, I calculated the correlation between salary and other features (e.g., `occupation`, `education`, `years_of_experience`, and `current_age`) using Pearson correlation for numerical features and Label Encoding for categorical features. I selected features that showed strong positive or negative correlations with salary. I then used these features to build a Multiple Linear Regression model to predict missing salary values.
+   - Justification: Salary, being a continuous variable, is well-suited for regression-based imputation. The features I selected, such as `years_of_experience` and `occupation`, had a meaningful relationship with salary. By using these in the regression model, I ensured that the imputed values reflect the broader trends and dependencies present in the dataset, leading to more accurate predictions.
+
+ 2. Marital Status:
+   - Imputation Approach: I calculated correlations between marital_status and other numerical features using Pearson correlation and evaluated associations with categorical features using Cramér's V. I selected the most relevant features (e.g., `age`, `gender`, `education`, and `occupation`) and used them to build a Multinomial Logistic Regression model for imputation.
+   - Justification: Marital status is a categorical variable with multiple levels, making logistic regression appropriate for predicting probabilities of categories such as single, married, or divorced. The correlation analysis ensured that the most predictive attributes were included, allowing for realistic, data-driven imputation that aligns with observed patterns in the dataset.
+ 
+

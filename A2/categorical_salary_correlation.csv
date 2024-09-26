@@ -1,0 +1,9 @@
+,salary
+salary,1.0
+state_encoded,0.01624206817207229
+gender_encoded,0.002950547246890085
+postcode_encoded,-0.0066427069108875225
+suburb_encoded,-0.017854578682476863
+marital_status_encoded,-0.07346240891932196
+occupation_encoded,-0.08252940080911624
+education_encoded,-0.42737882554875245

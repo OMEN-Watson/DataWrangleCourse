@@ -1,0 +1,2 @@
+Combination of attributes with the most missing values: ('marital_status', 'occupation', 'credit_card_number')
+Number of records with missing values for this combination: 1430
