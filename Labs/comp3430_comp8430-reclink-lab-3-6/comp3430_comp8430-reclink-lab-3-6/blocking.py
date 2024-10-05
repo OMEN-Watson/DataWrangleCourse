@@ -2,7 +2,7 @@
     where a blocking function must return a dictionary with block identifiers
     as keys and values being sets or lists of record identifiers in that block.
 """
-
+import TonsOfFunctions as tof
 # =============================================================================
 
 def noBlocking(rec_dict):
@@ -124,11 +124,11 @@ def phoneticBlocking(rec_dict, blk_attr_list):
     #
     for attr in blk_attr_list:
       attr_val = rec_values[attr]
-
       # *********** Implement Soundex function here *********
 
       # Add your code here 
-
+      soundex_val =tof.custom_soundex(attr_val)  # Apply Soundex encoding
+      rec_bkv += soundex_val
       # Also think about how to handle empty attribute values
 
       # ************ End of your Soundex code *********************************
@@ -151,6 +151,8 @@ def phoneticBlocking(rec_dict, blk_attr_list):
     block_dict[rec_bkv] = rec_id_list  # Store the new block
 
   return block_dict
+
+
 
 # -----------------------------------------------------------------------------
 
@@ -195,7 +197,9 @@ def slkBlocking(rec_dict, fam_name_attr_ind, giv_name_attr_ind,
   for (rec_id, rec_values) in rec_dict.items():
 
     rec_bkv = ''  # Initialise the blocking key value for this record
- 
+ # Generate SLK-581 blocking key for this record
+    rec_bkv =tof. slk_581_from_record(rec_values, fam_name_attr_ind, giv_name_attr_ind, dob_attr_ind, gender_attr_ind)
+
     # *********** Implement SLK-581 function here ***********
 
     # Add your code here 

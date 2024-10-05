@@ -25,6 +25,12 @@ import comparison
 import classification
 import evaluation
 
+import os
+fileParentPath='D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWrangleCourse\Labs\comp3430_comp8430-reclink-lab-3-6\comp3430_comp8430-reclink-lab-3-6\\'
+# for filename in os.listdir(filePath):
+#     # Check if it is a file (optional)
+#     if os.path.isfile(os.path.join(filePath, filename)):
+#         print(filename)
 # =============================================================================
 # Variable names for loading datasets
 
@@ -32,6 +38,9 @@ import evaluation
 
 datasetA_name = 'datasets/clean-A-1000.csv'
 datasetB_name = 'datasets/clean-B-1000.csv'
+datasetA_name=fileParentPath+datasetA_name
+datasetB_name=fileParentPath+datasetB_name
+
 
 #datasetA_name = 'datasets/little-dirty-A-10000.csv'
 #datasetB_name = 'datasets/little-dirty-B-10000.csv'
@@ -44,6 +53,7 @@ headerB_line   = True  # Dataset B header line available - True or Flase
 # ***** Uncomment a file name corresponding to your selected datasets *******
 
 truthfile_name = 'datasets/clean-true-matches-1000.csv'
+truthfile_name=fileParentPath+truthfile_name
 
 #truthfile_name = 'datasets/little-dirty-true-matches-10000.csv'
 
@@ -128,18 +138,18 @@ start_time = time.time()
 
 # No blocking (all records in one block)
 #
-blockA_dict = blocking.noBlocking(recA_dict)
-blockB_dict = blocking.noBlocking(recB_dict)
+# blockA_dict = blocking.noBlocking(recA_dict)
+# blockB_dict = blocking.noBlocking(recB_dict)
 
 # Simple attribute-based blocking
 #
-#blockA_dict = blocking.simpleBlocking(recA_dict, blocking_attrA_list)
-#blockB_dict = blocking.simpleBlocking(recB_dict, blocking_attrB_list)
+blockA_dict = blocking.simpleBlocking(recA_dict, blocking_attrA_list)
+blockB_dict = blocking.simpleBlocking(recB_dict, blocking_attrB_list)
 
 # Phonetic (Soundex) based blocking
 #
-#blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
-#blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
+# blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
+# blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
 
 # Statistical linkage key (SLK-581) based blocking
 #
@@ -148,10 +158,10 @@ giv_name_attr_ind = 1
 dob_attr_ind      = 6
 gender_attr_ind   = 4
 
-#blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, \
+# blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, \
 #                                   giv_name_attr_ind, dob_attr_ind, \
 #                                   gender_attr_ind)
-#blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, \
+# blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, \
 #                                   giv_name_attr_ind, dob_attr_ind, \
 #                                   gender_attr_ind)
 
