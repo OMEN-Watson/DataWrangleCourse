@@ -24,18 +24,19 @@ import blocking
 import comparison
 import classification
 import evaluation
-import sample.SClassification as sc
 import os
-fileParentPath='D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWrangleCourse\Labs\comp3430_comp8430-reclink-lab-3-6\comp3430_comp8430-reclink-lab-3-6\\'
+fileParentPath='D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWrangleCourse\A3\\'
+
  
 # =============================================================================
 # Variable names for loading datasets
 
 # ******** Uncomment to select a pair of datasets **************
 
-datasetA_name = 'datasets/clean-A-1000.csv'
-datasetB_name = 'datasets/clean-B-1000.csv' 
+datasetA_name = 'data_wrangling_rl1_2024_u7568823.csv'
+datasetB_name = 'data_wrangling_rl2_2024_u7568823.csv'
 
+ 
 datasetA_name=fileParentPath+datasetA_name
 datasetB_name=fileParentPath+datasetB_name
 
@@ -48,7 +49,7 @@ headerB_line   = True  # Dataset B header line available - True or Flase
 
 # truthfile_name = 'datasets/clean-true-matches-1000.csv'
 
-truthfile_name = 'datasets/little-dirty-true-matches-10000.csv'
+truthfile_name = 'data_wrangling_rlgt_2024_u7568823.csv'
 truthfile_name=fileParentPath+truthfile_name
 
 # The two attribute numbers that contain the record identifiers
@@ -191,10 +192,8 @@ start_time = time.time()
 # Similarity threshold based classification
 #
 sim_threshold = 0.5
-# class_match_set, class_nonmatch_set = \
-#             classification.thresholdClassify(sim_vec_dict, sim_threshold)
 class_match_set, class_nonmatch_set = \
-           sc .thresholdClassify(sim_vec_dict, sim_threshold)
+            classification.thresholdClassify(sim_vec_dict, sim_threshold)
 
 
 # Minimum similarity threshold based classification

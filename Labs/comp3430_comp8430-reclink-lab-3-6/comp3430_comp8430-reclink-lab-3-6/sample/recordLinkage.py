@@ -26,16 +26,18 @@ import classification
 import evaluation
 import sample.SClassification as sc
 import os
-fileParentPath='D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWrangleCourse\Labs\comp3430_comp8430-reclink-lab-3-6\comp3430_comp8430-reclink-lab-3-6\\'
+fileParentPath='D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWrangleCourse\A3\\'
+
  
 # =============================================================================
 # Variable names for loading datasets
 
 # ******** Uncomment to select a pair of datasets **************
 
-datasetA_name = 'datasets/clean-A-1000.csv'
-datasetB_name = 'datasets/clean-B-1000.csv' 
+datasetA_name = 'data_wrangling_rl1_2024_u7568823.csv'
+datasetB_name = 'data_wrangling_rl2_2024_u7568823.csv'
 
+ 
 datasetA_name=fileParentPath+datasetA_name
 datasetB_name=fileParentPath+datasetB_name
 
