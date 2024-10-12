@@ -20,11 +20,16 @@
 import time
 
 import loadDataset
-import blocking
-import comparison
-import classification
-import evaluation
-import sample.SClassification as sc
+# import blocking
+# import comparison
+# import classification
+# import evaluation
+import sample.SBlocking as blocking
+import sample.SClassification as classification
+import sample.SComparison as comparison
+ 
+import sample.SEvaluation as evaluation
+
 import os
 fileParentPath='D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWrangleCourse\Labs\comp3430_comp8430-reclink-lab-3-6\comp3430_comp8430-reclink-lab-3-6\\'
  
@@ -32,9 +37,12 @@ fileParentPath='D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWr
 # Variable names for loading datasets
 
 # ******** Uncomment to select a pair of datasets **************
+# datasetA_name = 'datasets/clean-A-1000.csv'
+# datasetB_name = 'datasets/clean-B-1000.csv' 
 
-datasetA_name = 'datasets/clean-A-1000.csv'
-datasetB_name = 'datasets/clean-B-1000.csv' 
+
+datasetA_name = 'datasets/little-dirty-A-10000.csv'
+datasetB_name = 'datasets/little-dirty-B-10000.csv' 
 
 datasetA_name=fileParentPath+datasetA_name
 datasetB_name=fileParentPath+datasetB_name
@@ -82,8 +90,11 @@ attrB_list    = [1,2,3,4,6,7,8,9,10,11]
 # The list of attributes to use for blocking (all must occur in the above
 # attribute lists)
 #
-blocking_attrA_list = [3,4]
-blocking_attrB_list = [3,4]
+# blocking_attrA_list = [3,4]
+# blocking_attrB_list = [3,4]
+
+blocking_attrA_list = [7,8,9]
+blocking_attrB_list = [7,8,9]
 
 # ******** In lab 4, explore different comparison functions for different  ****
 # ********           attributes                                            ****
@@ -98,13 +109,22 @@ exact_comp_funct_list = [(comparison.exact_comp, 1, 1),  # First name
                          (comparison.exact_comp,10,10),  # State
                          ]
 
+# approx_comp_funct_list = [(comparison.jaccard_comp, 1, 1),        # First name
+#                           (comparison.dice_comp, 2, 2),           # Middle name
+#                           (comparison.jaro_winkler_comp, 3, 3),   # Last name
+#                           (comparison.bag_dist_sim_comp, 7, 7),   # Address
+#                           (comparison.edit_dist_sim_comp, 8, 8),  # Suburb
+#                           (comparison.exact_comp,10,10),          # State
+#                          ]
 approx_comp_funct_list = [(comparison.jaccard_comp, 1, 1),        # First name
                           (comparison.dice_comp, 2, 2),           # Middle name
                           (comparison.jaro_winkler_comp, 3, 3),   # Last name
+                        #   (comparison.bag_dist_sim_comp, 6, 6),  # birth date
                           (comparison.bag_dist_sim_comp, 7, 7),   # Address
                           (comparison.edit_dist_sim_comp, 8, 8),  # Suburb
                           (comparison.exact_comp,10,10),          # State
                          ]
+
 
 # =============================================================================
 #
@@ -142,8 +162,8 @@ start_time = time.time()
 
 # Phonetic (Soundex) based blocking
 #
-# blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
-# blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
+blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
+blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
 
 # Statistical linkage key (SLK-581) based blocking
 #
@@ -152,12 +172,12 @@ giv_name_attr_ind = 1
 dob_attr_ind      = 6
 gender_attr_ind   = 4
 
-blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, \
-                                  giv_name_attr_ind, dob_attr_ind, \
-                                  gender_attr_ind)
-blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, \
-                                  giv_name_attr_ind, dob_attr_ind, \
-                                  gender_attr_ind)
+# blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, \
+#                                   giv_name_attr_ind, dob_attr_ind, \
+#                                   gender_attr_ind)
+# blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, \
+                                 #  giv_name_attr_ind, dob_attr_ind, \
+                                 #  gender_attr_ind)
 
 blocking_time = time.time() - start_time
 
@@ -194,7 +214,7 @@ sim_threshold = 0.5
 # class_match_set, class_nonmatch_set = \
 #             classification.thresholdClassify(sim_vec_dict, sim_threshold)
 class_match_set, class_nonmatch_set = \
-           sc .thresholdClassify(sim_vec_dict, sim_threshold)
+           classification .thresholdClassify(sim_vec_dict, sim_threshold)
 
 
 # Minimum similarity threshold based classification

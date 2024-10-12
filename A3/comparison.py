@@ -4,6 +4,7 @@
 """
 
 Q = 2  # Value length of q-grams for Jaccard and Dice comparison function
+# Q = 3  # Value length of q-grams for Jaccard and Dice comparison function
 
 # =============================================================================
 # First the basic functions to compare attribute values

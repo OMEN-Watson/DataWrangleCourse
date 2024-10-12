@@ -25,6 +25,7 @@ import comparison
 import classification
 import evaluation
 import os
+import saveLinkResult
 fileParentPath='D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWrangleCourse\A3\\'
 
  
@@ -86,6 +87,14 @@ attrB_list    = [1,2,3,4,6,7,8,9,10,11]
 blocking_attrA_list = [3,4]
 blocking_attrB_list = [3,4]
 
+# blocking_attrA_list = [1,3]
+# blocking_attrB_list = [1,3]
+
+# blocking_attrA_list = [7,8,9]
+# blocking_attrB_list = [7,8,9]
+
+# blocking_attrA_list = [3,4,5]
+# blocking_attrB_list = [3,4,5]
 # ******** In lab 4, explore different comparison functions for different  ****
 # ********           attributes                                            ****
 
@@ -99,12 +108,22 @@ exact_comp_funct_list = [(comparison.exact_comp, 1, 1),  # First name
                          (comparison.exact_comp,10,10),  # State
                          ]
 
+# approx_comp_funct_list = [(comparison.jaccard_comp, 1, 1),        # First name
+#                           (comparison.dice_comp, 2, 2),           # Middle name
+#                           (comparison.jaro_winkler_comp, 3, 3),   # Last name
+#                            (comparison.bag_dist_sim_comp, 7, 7),   # Address
+#                           (comparison.edit_dist_sim_comp, 8, 8),  # Suburb
+#                           (comparison.exact_comp,10,10),          # State
+#                           ]
 approx_comp_funct_list = [(comparison.jaccard_comp, 1, 1),        # First name
                           (comparison.dice_comp, 2, 2),           # Middle name
                           (comparison.jaro_winkler_comp, 3, 3),   # Last name
+                        #   (comparison.edit_dist_sim_comp, 6, 6),  # birth date
                           (comparison.bag_dist_sim_comp, 7, 7),   # Address
                           (comparison.edit_dist_sim_comp, 8, 8),  # Suburb
                           (comparison.exact_comp,10,10),          # State
+                        #   (comparison.edit_dist_sim_comp, 11, 11),  # phone
+                        #   (comparison.edit_dist_sim_comp, 12, 12),  # email
                          ]
 
 # =============================================================================
@@ -143,8 +162,27 @@ start_time = time.time()
 
 # Phonetic (Soundex) based blocking
 #
-# blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
-# blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
+blockA_dict = blocking.phoneticBlocking(recA_dict, blocking_attrA_list)
+blockB_dict = blocking.phoneticBlocking(recB_dict, blocking_attrB_list)
+
+# Second blocking pass on [1,3] (First Name, Last Name)
+blockA_dict2 = blocking.phoneticBlocking(recA_dict, [7, 8,9])  # First Name, Last Name
+blockB_dict2 = blocking.phoneticBlocking(recB_dict, [7, 8,9])
+
+# Option 1: Combine blocks by merging them into a single set
+# Concatenate both block dictionaries from the two passes
+blockA_dict = {**blockA_dict, **blockA_dict2}
+blockB_dict = {**blockB_dict, **blockB_dict2}
+#region test double blocking
+
+# blockA_dict = blocking.phoneticBlocking(recA_dict, [1,3])
+# blockB_dict = blocking.phoneticBlocking(recB_dict, [1,3])
+
+
+# blockA_dict2 = blocking.phoneticBlocking(recA_dict, [3,4])
+# blockB_dict2 = blocking.phoneticBlocking(recB_dict, [3,4])
+
+#endregion
 
 # Statistical linkage key (SLK-581) based blocking
 #
@@ -153,12 +191,12 @@ giv_name_attr_ind = 1
 dob_attr_ind      = 6
 gender_attr_ind   = 4
 
-blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, \
-                                  giv_name_attr_ind, dob_attr_ind, \
-                                  gender_attr_ind)
-blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, \
-                                  giv_name_attr_ind, dob_attr_ind, \
-                                  gender_attr_ind)
+# blockA_dict = blocking.slkBlocking(recA_dict, fam_name_attr_ind, \
+#                                   giv_name_attr_ind, dob_attr_ind, \
+#                                   gender_attr_ind)
+# blockB_dict = blocking.slkBlocking(recB_dict, fam_name_attr_ind, \
+#                                   giv_name_attr_ind, dob_attr_ind, \
+#                                   gender_attr_ind)
 
 blocking_time = time.time() - start_time
 
@@ -195,32 +233,33 @@ sim_threshold = 0.5
 class_match_set, class_nonmatch_set = \
             classification.thresholdClassify(sim_vec_dict, sim_threshold)
 
-
+saveLinkResult.save_linkage_set("D:\\01Gan\\abroad\study\\05ANU\8430DataWrangle\Assignment\DataWrangleCourse\A3\pakage\copyset.csv",class_match_set)
 # Minimum similarity threshold based classification
 #
-#min_sim_threshold = 0.5
-#class_match_set, class_nonmatch_set = \
+# min_sim_threshold = 0.5
+# class_match_set, class_nonmatch_set = \
 #             classification.minThresholdClassify(sim_vec_dict,
-#                                                 min_sim_threshold)
+                                                # min_sim_threshold)
 
 # *********** In lab 6, explore different weight vectors **********************
 
 # Weighted similarity threshold based classification
 #
-#weight_vec = [1.0] * len(approx_comp_funct_list)
+# weight_vec = [1.0] * len(approx_comp_funct_list)
 
 # Lower weights for middle name and state
 #
-#weight_vec = [2.0, 1.0, 2.0, 2.0, 2.0, 1.0]
+# weight_vec = [2.0, 1.0, 2.0, 2.0, 2.0, 1.0]
+# weight_vec = [2.0, 1.0,2.0, 3.0, 3.0, 3.0, 1.0]
 
-#class_match_set, class_nonmatch_set = \
+# class_match_set, class_nonmatch_set = \
 #             classification.weightedSimilarityClassify(sim_vec_dict,
-#                                                       weight_vec,
-#                                                       sim_threshold)
+                                                      # weight_vec,
+                                                      # sim_threshold)
 
 # A supervised decision tree classifier
 #
-#class_match_set, class_nonmatch_set = \
+# class_match_set, class_nonmatch_set = \
 #           classification.supervisedMLClassify(sim_vec_dict, true_match_set)
 
 classification_time = time.time() - start_time
